@@ -50,6 +50,7 @@ export default function MailList({ data, setData }) {
             >
               <div className="content">
                 <p className="sender-name">{value.email}</p>
+                <p className="sender-name">{value.subject}</p>
                 <p className="message_text">{value.email_body}</p>
               </div>
               <div className="details">
@@ -59,7 +60,7 @@ export default function MailList({ data, setData }) {
           );
         })}
       </div>
-      {Object.keys(curData).length === 0 && hideOpenMail ? (
+      {Object.keys(curData).length === 0 ? (
         <div
           className="mail-view col-md-9 col-lg-7 bg-white"
           style={{
@@ -72,12 +73,15 @@ export default function MailList({ data, setData }) {
           <h1>No Emails</h1>
         </div>
       ) : (
-        <EmailView
-          subject={curData.subject}
-          curData={curData}
-          hideOpenMail={hideOpenMail}
-          setHideOpenMail={setHideOpenMail}
-        />
+        curData && (
+          <EmailView
+            subject={curData.subject}
+            curData={curData}
+            hideOpenMail={hideOpenMail}
+            setHideOpenMail={setHideOpenMail}
+            setCurData={setCurData}
+          />
+        )
       )}
     </>
   );

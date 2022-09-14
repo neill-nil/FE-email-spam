@@ -2,11 +2,15 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import { toastOptions } from "../../Pages/SignupPage";
-import {AiOutlineStar,AiFillStar} from "react-icons/ai"
+import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { useState } from "react";
-export default function EmailView({ curData, hideOpenMail, setHideOpenMail }) {
+export default function EmailView({
+  curData,
+  setCurData,
+  hideOpenMail,
+  setHideOpenMail,
+}) {
   console.log(curData);
-  const [star,setStar] = useState(<AiOutlineStar/>)
   const starHandler = async (e) => {
     e.preventDefault();
     let email_id = curData.email_id;
@@ -18,7 +22,15 @@ export default function EmailView({ curData, hideOpenMail, setHideOpenMail }) {
       .then((req) => {
         console.log(req);
         toast.success(req.data.note, toastOptions);
-        (<AiFillStar/> === star)?<AiOutlineStar/>:<AiFillStar/>
+        (!curData.starred)? 
+        setCurData({
+          ...curData,
+          starred: true,
+        })
+        :setCurData({
+          ...curData,
+          starred: false,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -60,7 +72,7 @@ export default function EmailView({ curData, hideOpenMail, setHideOpenMail }) {
                 className="btn btn-sm btn-outline-secondary"
                 onClick={starHandler}
               >
-                {star}
+                {curData.starred ? <AiFillStar /> : <AiOutlineStar />}
               </button>
             </div>
           </div>
