@@ -3,6 +3,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { toastOptions } from "../../Pages/SignupPage";
 
 const style = {
   position: "absolute",
@@ -50,7 +52,7 @@ export default function ComposeModal() {
   const sendHandler = async (e) => {
     e.preventDefault();
     const { to, subject, email_body } = emailData;
-    const userId = localStorage.getItem("userId")
+    const userId = localStorage.getItem("userId");
     await axios
       .post("/compose", {
         to,
@@ -60,8 +62,16 @@ export default function ComposeModal() {
       })
       .then((req) => {
         console.log(req);
+        toast.success(req.data.note, toastOptions);
+        setEmailData({
+          to: "",
+          subject: "",
+          email_body: "",
+        });
+        handleClose();
       })
       .catch((err) => {
+        toast.error(err.response.data.note, toastOptions);
         console.log(err);
       });
   };
@@ -97,20 +107,9 @@ export default function ComposeModal() {
                   className="to-and-from-feild-input"
                   onChange={handleChange}
                   value={emailData.to}
+                  required
                 />
               </div>
-              {/* <div id="email-container-from-field">
-                <label htmlFor="from" className="Input-label">
-                  from:
-                </label>
-                <input
-                  type="text"
-                  name="from"
-                  className="to-and-from-feild-input"
-                  onChange={handleChange}
-                  value={emailData.from}
-                />
-              </div> */}
               <div id="email-container-subject-field">
                 <label htmlFor="subject" className="Input-label">
                   Subject:
@@ -121,6 +120,7 @@ export default function ComposeModal() {
                   className="email-container-subject-field-input"
                   onChange={handleChange}
                   value={emailData.subject}
+                  required
                 />
               </div>
               <div id="email-container-body-field">
@@ -131,6 +131,7 @@ export default function ComposeModal() {
                   rows="10"
                   onChange={handleChange}
                   value={emailData.email_body}
+                  required
                 ></textarea>
               </div>
               <div id="email-container-send-field">

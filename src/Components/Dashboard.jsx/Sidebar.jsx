@@ -14,18 +14,18 @@ export default function Sidebar({ propData }) {
     Starred: <></>,
     Trash: <></>,
   };
-  const [active,setActive] = useState("primary")
+  const [active, setActive] = useState("primary");
   const clickHandler = async (e) => {
     let value = e.target.getAttribute("name");
     value = value.toLowerCase();
     let userId = JSON.parse(propData).user_id;
-    setActive(value)
+    setActive(value);
     await axios
       .get(`/inbox/${value}/${userId}`)
       .then((req) => {
         console.log(req.data);
-        localStorage.setItem("value",value);
-        localStorage.setItem("userId",userId);
+        localStorage.setItem("value", value);
+        localStorage.setItem("userId", userId);
         setData(req.data);
       })
       .catch((err) => {
@@ -35,7 +35,7 @@ export default function Sidebar({ propData }) {
   const logoutHandler = async (e) => {
     e.preventDefault();
     await axios.get("/logout").then(() => {
-      localStorage.clear()
+      localStorage.clear();
       navigate("/login");
     });
   };
@@ -45,6 +45,8 @@ export default function Sidebar({ propData }) {
       .get(`/inbox/primary/${userId}`)
       .then((req) => {
         console.log(req.data);
+        localStorage.setItem("value", "primary");
+        localStorage.setItem("userId", userId);
         setData(req.data);
       })
       .catch((err) => {
@@ -62,24 +64,37 @@ export default function Sidebar({ propData }) {
       >
         <div className="menu-bar">
           <ul className="menu-items">
-            <li className="compose mb-3" style={{display:"flex",justifyContent:"center"}}>
-              <ComposeModal/>
+            <li
+              className="compose mb-3"
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <ComposeModal />
             </li>
             {Object.keys(menuItems).map((value) => {
               return (
-                <li className={(value.toLocaleLowerCase()===active)?"active":""} onClick={clickHandler} name={value}>
+                <li
+                  className={
+                    value.toLocaleLowerCase() === active ? "active" : ""
+                  }
+                  onClick={clickHandler}
+                  name={value}
+                >
                   <a href="#" name={value} style={{ pointerEvents: "none" }}>
                     <i className="mdi mdi-email-outline" name={value}></i>{" "}
                     {value}
                   </a>
-                  <span className="badge badge-pill badge-success" name={value}>
+                  {/* <span className="badge badge-pill badge-success" name={value}>
                     8
-                  </span>
+                  </span> */}
                 </li>
               );
             })}
           </ul>
-          <button className="btn btn-primary btn-block" id="logoutBtn" onClick={logoutHandler}>
+          <button
+            className="btn btn-primary btn-block"
+            id="logoutBtn"
+            onClick={logoutHandler}
+          >
             Logout
           </button>
         </div>

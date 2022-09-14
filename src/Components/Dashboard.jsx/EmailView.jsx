@@ -1,8 +1,29 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-
-export default function EmailView({ curData,hideOpenMail ,setHideOpenMail }) {
+import { toast } from "react-toastify";
+import { toastOptions } from "../../Pages/SignupPage";
+import {AiOutlineStar,AiFillStar} from "react-icons/ai"
+import { useState } from "react";
+export default function EmailView({ curData, hideOpenMail, setHideOpenMail }) {
   console.log(curData);
+  const [star,setStar] = useState(<AiOutlineStar/>)
+  const starHandler = async (e) => {
+    e.preventDefault();
+    let email_id = curData.email_id;
+    await axios
+      .put("/update", {
+        action: "star",
+        email_id,
+      })
+      .then((req) => {
+        console.log(req);
+        toast.success(req.data.note, toastOptions);
+        (<AiFillStar/> === star)?<AiOutlineStar/>:<AiFillStar/>
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const handleClick = async (e) => {
     e.preventDefault();
     let email_id = curData.email_id;
@@ -13,7 +34,8 @@ export default function EmailView({ curData,hideOpenMail ,setHideOpenMail }) {
       })
       .then((req) => {
         console.log(req);
-        setHideOpenMail(true)
+        setHideOpenMail(true);
+        toast.success(req.data.note, toastOptions);
       })
       .catch((err) => {
         console.log(err);
@@ -33,6 +55,13 @@ export default function EmailView({ curData,hideOpenMail ,setHideOpenMail }) {
                 <i className="mdi mdi-delete text-primary mr-1"></i>
                 Delete
               </button>
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-secondary"
+                onClick={starHandler}
+              >
+                {star}
+              </button>
             </div>
           </div>
         </div>
@@ -41,7 +70,8 @@ export default function EmailView({ curData,hideOpenMail ,setHideOpenMail }) {
         <div className="sender-details">
           <img
             className="img-sm rounded-circle mr-3"
-            src="http://www.urbanui.com/dashflat/template/images/faces/face11.jpg"
+            style={{ height: "70px" }}
+            src="https://p.kindpng.com/picc/s/24-248325_profile-picture-circle-png-transparent-png.png"
             alt=""
           />
           <div className="details">

@@ -4,7 +4,7 @@ import EmailView from "./EmailView";
 
 export default function MailList({ data, setData }) {
   const [curData, setCurData] = useState({});
-  const [hideOpenMail,setHideOpenMail] = useState(true);
+  const [hideOpenMail, setHideOpenMail] = useState(true);
   let action = "read";
   const handleRead = async (email_id) => {
     await axios
@@ -25,8 +25,8 @@ export default function MailList({ data, setData }) {
     await axios
       .get(`/inbox/${value}/${userId}`)
       .then((req) => {
-        setData(req.data)
-        console.log(req)
+        setData(req.data);
+        console.log(req);
       })
       .catch((err) => {
         console.log(err);
@@ -44,7 +44,7 @@ export default function MailList({ data, setData }) {
               className={value.read ? "mail-list" : "mail-list new_mail"}
               onClick={() => {
                 handleRead(value.email_id);
-                handleUpdate()
+                handleUpdate();
                 setCurData(value);
               }}
             >
@@ -72,7 +72,12 @@ export default function MailList({ data, setData }) {
           <h1>No Emails</h1>
         </div>
       ) : (
-        <EmailView subject={curData.subject} curData={curData} hideOpenMail={hideOpenMail} setHideOpenMail={setHideOpenMail} />
+        <EmailView
+          subject={curData.subject}
+          curData={curData}
+          hideOpenMail={hideOpenMail}
+          setHideOpenMail={setHideOpenMail}
+        />
       )}
     </>
   );

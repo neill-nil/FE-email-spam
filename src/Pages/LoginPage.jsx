@@ -2,6 +2,8 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { toastOptions } from "./SignupPage";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -26,10 +28,12 @@ export default function LoginPage() {
       .then((req) => {
         console.log(req);
         localStorage.setItem("user", JSON.stringify(req.data));
+        toast.success("Successfully Login", toastOptions)
         navigate("/dashboard");
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err.response.data.note,toastOptions)
       });
   };
   return (
@@ -119,6 +123,7 @@ export default function LoginPage() {
           </div>
         </div>
       </section>
+      <ToastContainer autoClose={1000}/>
     </div>
   );
 }

@@ -2,16 +2,16 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import {toast,ToastContainer} from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const toastOptions = {
+  position: "bottom-right",
+  autoClose: 3000,
+  theme: "colored",
+};
 export default function SignupPage() {
   const navigate = useNavigate();
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 3000,
-    theme: "colored",
-  };
   const [userData, setUserData] = useState({
     firstname: "",
     lastname: "",
@@ -48,7 +48,7 @@ export default function SignupPage() {
     }
     if (!emailReg.test(userData.email)) {
       toast.error("Enter Correct Email", toastOptions);
-      console.log(userData.email)
+      console.log(userData.email);
       return false;
     }
     if (!mobileReg.test(userData.contact_no)) {
@@ -202,7 +202,8 @@ export default function SignupPage() {
           </div>
         </div>
       </section>
-      <ToastContainer autoClose={1000}/>
+      <ToastContainer autoClose={1000} />
     </div>
   );
 }
+export { toastOptions };
