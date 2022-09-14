@@ -80,9 +80,11 @@ export default function SignupPage() {
         .then((req) => {
           console.log(req);
           navigate("/login");
+          toast.success(req.data.note,toastOptions)
         })
         .catch((err) => {
           console.log(err);
+          toast.error(err.response.data.note,toastOptions)
         });
     }
   };
