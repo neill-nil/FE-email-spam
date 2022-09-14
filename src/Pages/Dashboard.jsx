@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MailList from "../Components/Dashboard.jsx/MailList";
 import Sidebar from "../Components/Dashboard.jsx/Sidebar";
 import { ToastContainer } from "react-toastify";

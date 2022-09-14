@@ -102,7 +102,7 @@ export default function ComposeModal() {
                   To:
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   name="to"
                   className="to-and-from-feild-input"
                   onChange={handleChange}

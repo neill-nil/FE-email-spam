@@ -89,7 +89,7 @@ export default function EmailView({
           <div className="details">
             <p className="msg-subject">{curData.subject}</p>
             <p className="sender-email">
-              {curData.firstname + " " + curData.lastname}
+              {curData.firstname + " " + curData.lastname+" "}  
               <a href="#">{curData.email}</a>
               &nbsp;<i className="mdi mdi-account-multiple-plus"></i>
             </p>

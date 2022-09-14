@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -19,6 +20,11 @@ export default function SignupPage() {
     email: "",
     password: "",
   });
+  useEffect(()=>{
+    if(localStorage.getItem("user")){
+      navigate("/dashboard")
+    }
+  },[])
   const changeHandler = (e) => {
     e.preventDefault();
     let value = e.target.value;
