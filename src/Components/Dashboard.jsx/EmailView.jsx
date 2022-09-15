@@ -95,7 +95,7 @@ export default function EmailView({
             </p>
           </div>
         </div>
-        <div className="message-content">{curData.email_body}</div>
+        <p className="message-content">{curData.email_body}</p>
       </div>
     </div>
   );
